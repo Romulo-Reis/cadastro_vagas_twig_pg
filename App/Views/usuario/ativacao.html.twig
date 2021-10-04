@@ -1,0 +1,26 @@
+{% extends '@layouts/base.html.twig' %}
+
+{% block conteudo %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="jumbotron">
+            <h1>Ativação de cadastro</h1>
+
+            <p>{{ mensagem }}</p>
+
+            {% if usuario is not empty %}
+            <form action="http://{{ APP_HOST }}/usuario/reenviar" method="post">
+                <input type="hidden" name="email"
+                    value="{{ usuario.email }}">
+
+                <button type="submit" class="btn btn-default">Enviar novamente</button>
+            </form>
+            {% else %}
+            <p>
+                <a class="btn btn-lg btn-primary" href="/" role="button">Voltar</a>
+            </p>
+            {% endif %}
+        </div>
+    </section>
+</section>
+{% endblock conteudo %}

@@ -1,0 +1,26 @@
+<nav class="header white-bg navbar navbar-default navbar-static-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<div class="sidebar-toggle-box">
+				<div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
+			</div>
+			<a href="http://{{ APP_HOST }}" class="logo">DEVMEDIA - PHP </a>	
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				{% if usuarioLogado is empty %}
+					<li><a href="http://{{ APP_HOST }}/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+				{% else %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{usuarioLogado.login}} <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+						<li><a href="#">Perfil</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="http://{{ APP_HOST }}/login/deslogar">Sair</a></li>
+						</ul>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>

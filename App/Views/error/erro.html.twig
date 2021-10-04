@@ -1,0 +1,21 @@
+{% extends '@layouts/base.html.twig' %}
+
+{% block conteudo %}
+<section id="main-content">
+	<section class="wrapper">
+		<div class="row">      
+			<div class="col-lg-12">
+				<section class="pane panel-default">
+					<header class="panel-heading">
+						Erro {{ codigo }}
+					</header>
+					<div class="panel-body">  
+						{{ mensagemErro }}            
+					</div>
+				</section>
+			</div>
+		</div>
+	</section>
+</section>
+{% endblock %}
+

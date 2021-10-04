@@ -1,0 +1,45 @@
+{% extends '@layouts/base.html.twig' %}
+
+{% block conteudo %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+        {% if erros != false %}
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {% for key, mensagem in erros %}
+                    {{ mensagem }} <br>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+            <form class="form-horizontal" id="form_recuperacao_login" method="POST" action="http://{{ APP_HOST }}/login/gerarCodigo">
+                <div class="col-lg-12">
+                    <section class="panel panel-default">
+                        <header class="panel-heading">
+                            Informe o e-mail cadastrado na sua conta    
+                        </header>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label" for="email">E-mail</label>
+                                <div class="col-lg-9">
+                                    <div class="iconic-input right">
+                                        <input type="email" id="email" name="email" placeholder="E-mail" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12">                       
+                    <div align="right">   
+                        <a class="btn btn-success" href="http://{{ APP_HOST }}/login">Voltar</a>
+                        <button class="btn btn-info" type="submit">Enviar</button>
+                    </div>           
+                </div>
+            </form>          
+        </div>
+    </section>
+</section>
+{% endblock %}

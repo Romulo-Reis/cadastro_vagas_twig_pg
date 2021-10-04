@@ -1,0 +1,73 @@
+{% extends '@layouts/base.html.twig' %}
+
+{% block conteudo %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+        {% if erros != false %}
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {% for key, mensagem in erros %}
+                    {{ mensagem }} <br>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+            <form class="form-horizontal" id="form_cadastro_usuario" method="POST" action="http://{{ APP_HOST }}/usuario/salvar">
+                <div class="col-lg-12">
+                    <section class="panel panel-default">
+                        <header class="panel-heading">
+                            Cadastro de novo usuário    
+                        </header>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label" for="login">Login</label>
+                                <div class="col-lg-9">
+                                    <div class="iconic-input right">
+                                        <input type="text" id="login" name="login" placeholder="Login" class="form-control" required value="{{ usuario.login }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label" for="senha">Senha</label>
+                                <div class="col-lg-9">
+                                    <div class="iconic-input right">
+                                        <input type="password" id="senha" name="senha" placeholder="Senha" class="form-control" required value="{{ usuario.senha }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-lg-3 col-sm-3 control-label">Confirmação de senha</label>
+                                <div class="col-lg-9">
+                                    <div class="iconic-input right">
+                                        <input type="password" maxlength="45" value="{{ usuario.confSenha }}" id="senha" name="senha" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label" for="email">E-mail</label>
+                                <div class="col-lg-9">
+                                    <div class="iconic-input right">
+                                        <input type="email" id="email" name="email" placeholder="E-mail" class="form-control" required value="{{ usuario.email }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-12">                       
+                    <div align="right">   
+                        <a class="btn btn-success" href="http://{{ APP_HOST }}/usuario/listar">Voltar</a>
+                        <button class="btn btn-info" type="submit">salvar</button>
+                    </div>           
+                </div>
+            </form>          
+        </div>
+    </section>
+</section>
+{% endblock %}

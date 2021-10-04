@@ -1,0 +1,27 @@
+{% extends '@layouts/base.html.twig' %}
+
+{% block conteudo %}
+
+<section id="main-content">
+  <section class="wrapper">
+    <div class="row">
+      {% if mensagem is not empty %}
+          <div class="col-lg-12">
+              <div class="alert alert-success" role="alert">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <b>{{ mensagem }}</b>
+              </div>
+          </div>
+      {% endif %}      
+      <div class="col-lg-12">
+        <section class="pane panel-default">
+          <header class="panel-heading">
+            Aplicação Mestre-detalhe com PHP e MVC
+          </header>          
+        </section>
+      </div>
+    </div>
+  </section>
+</section>
+
+{% endblock %}

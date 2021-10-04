@@ -1,0 +1,47 @@
+{% extends '@layouts/base.html.twig' %}
+
+{% block conteudo %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <form class="form-horizontal" action="http://{{ APP_HOST }}/empresa/excluir" method="post">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Excluir empresa
+                        </header>
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <section class="panel">
+                                    <div class="alert alert-info" role="alert">
+                                        <b>Se a empresa for excluída, todas as vagas vinculadas esta emprasa serão excluidas (total de vaga(s): {{ vagas|length }}). Tem certeza que deseja continuar?</b>
+                                    </div>
+                                </section>
+                            </div>
+                            {% if vagas is not empty %}
+                            <div class="col-lg-6">
+                                <section class="panel">
+                                    <div class="alert alert-success" role="alert">
+                                        <p><b>Vagas vinculadas:</b></p>
+                                        {% for vaga in vagas %}
+                                            <p>{{ vaga.titulo }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel-body" align="right">
+                        <input type="hidden" name="idempresa" value="{{ empresa.idempresa }}">
+                        <button class="btn btn-danger" type="submit">Confirmar excluisão</button>
+                        <a href="http://{{ APP_HOST }}/empresa/listar" class="btn btn-success">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+{% endblock %}

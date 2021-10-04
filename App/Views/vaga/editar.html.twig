@@ -1,0 +1,118 @@
+{% extends '@layouts/base.html.twig' %}
+
+{% block conteudo %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            {% if erros != false %}
+           <div class="col-lg-12">
+              <div class="alert alert-danger" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for key, mensagem in erros %}
+                  {{ mensagem }} <br>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}          
+            <form class="form-horizontal" id="form_cadastro_vaga" action="http://{{ APP_HOST }}/vaga/editar" method="post">
+                <div class="col-lg-12">
+                    <section class="panel panel-default">
+                        <header class="panel-heading">
+                        Editar vaga    
+                        </header>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label" for="titulo">Titulo</label>
+                                <div class="col-lg-9">
+                                    <div class="iconic-input right">
+                                        <input type="hidden" name="idvaga" value="{{ vaga.idvaga }}">
+                                        <input type="text" id="titulo" name="titulo" placeholder="Titulo da vaga" class="form-control" required value="{{ vaga.titulo }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label" for="autocomplete-empresa">Empresa</label>
+                                <div class="col-lg-9">
+                                    <div>
+                                        <input type="text" name="autocompleteEmpresa" id="autocomplete-empresa" class="form-control" required placeholder="Empresa - autocomplete" value="{{ vaga.empresa.nomefantasia }}">
+                                        <input type="hidden" id="empresa" name="empresa" value="{{ vaga.empresa.idempresa }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label" for="descricao">Descrição</label>
+                                <div class="col-lg-9">
+                                    <div class="iconic-input right">
+                                        <textarea maxlenght="350" class="form-control spinner" placeholder="Descrição da vaga"  name="descricao" id="descricao" rows="5">{{ vaga.descricao }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-12">
+                    <section class="panel panel-default">
+                        <header class="panel-heading">
+                            Tecnologias
+                        </header>
+                        <div class="panel-body">
+                            <div id="tecnologias-selecionadas">
+                                <div class="form-group">
+                                    <label class="col-lg-3 col-sm-3 control-label" for="autocomplete-tecnologia">Adicionar</label>
+                                    <div class="col-lg-9">
+                                        <div class="iconic-input right">
+                                            <input type="text" id="autocomplete-tecnologia" class="form-control" placeholder="Tecnologias">
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>Tecnologia</th>
+                                        <th>Remover</th>
+                                    </thead>
+                                    <tbody id="editar-tabela-tecnologias">
+                                        {% if vaga.tecnologias is not empty %}
+                                            {% for tecnologia in vaga.tecnologias %}
+                                                <tr>
+                                                    <td>{{ tecnologia.tecnologia }} <input type="hidden" name="tecnologias[]" value="{{ tecnologia.idtecnologia }}"></td>
+                                                    <td><button class="btn btn-danger btn-sm" type="button" onClick="app.removeTecnologia(this,{{ tecnologia.idtecnologia }})">Remover</button></td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-12">
+                    <div align="right">
+                        <a class="btn btn-success" href="http://{{ APP_HOST }}/vaga/listar">Voltar</a>
+                        <button class="btn btn-info" type="submit">Cadastrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+
+<div id="modal-tecnologias" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">ATENÇÃO</h4>
+            </div>
+            <div class="modal-body">
+            <div class="alert alert-block alert-danger fade in" id="div-modal"> 
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
