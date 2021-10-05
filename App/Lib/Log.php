@@ -29,6 +29,7 @@ class Log implements LoggerInterface
     public function emergency($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::EMERGENCY));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::EMERGENCY));
         $logger->emergency($message, $context);
     }
@@ -37,6 +38,7 @@ class Log implements LoggerInterface
     public function alert($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::ALERT));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::ALERT));
         $logger->alert($message, $context);
     }
@@ -44,6 +46,7 @@ class Log implements LoggerInterface
     public function critical($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::CRITICAL));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::CRITICAL));
         $logger->critical($message, $context);
     }
@@ -51,6 +54,7 @@ class Log implements LoggerInterface
     public function error($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::ERROR));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::ERROR));
         $logger->error($message, $context);
     }
@@ -58,6 +62,7 @@ class Log implements LoggerInterface
     public function warning($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::WARNING));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::WARNING));
         $logger->warning($message, $context);
     }
@@ -65,6 +70,7 @@ class Log implements LoggerInterface
     public function notice($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::NOTICE));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::NOTICE));
         $logger->notice($message, $context);
     }
@@ -72,6 +78,7 @@ class Log implements LoggerInterface
     public function info($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::INFO));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::INFO));
         $logger->info($message, $context);
     }
@@ -79,6 +86,7 @@ class Log implements LoggerInterface
     public function debug($message, array $context = array())
     {
         $logger = new Logger($this->canal);
+        $logger->pushHandler(new StreamHandler("php://stderr", Logger::DEBUG));
         $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::DEBUG));
         $logger->debug($message, $context);
     }
@@ -87,7 +95,6 @@ class Log implements LoggerInterface
     public function log($level, $message, array $context = array())
     {
         $logger = new Logger($this->canal);
-        $logger->pushHandler(new StreamHandler($this->arquivoLog, Logger::DEBUG));
         $logger->log($level, $message, $context);
     }
 }
