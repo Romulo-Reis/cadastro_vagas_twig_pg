@@ -31,6 +31,7 @@ class Conexao
             if (self::$connection === null) {
                 self::$connection = new PDO($pdoConfig, $usuario, $senha);
                 self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$connection->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
                 $log->info("Iniciando a conexão com o banco de dados.");
             }
             return self::$connection;
