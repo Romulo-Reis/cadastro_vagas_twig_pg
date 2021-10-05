@@ -11,5 +11,8 @@
         "twig/extra-bundle": "^3.3",
         "monolog/monolog": "^2.3",
         "vlucas/phpdotenv": "^5.3"
+    },
+    "require-dev": {
+        "heroku/heroku-buildpack-php": "*"
     }
 }
