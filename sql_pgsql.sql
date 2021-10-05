@@ -33,9 +33,10 @@ CREATE TABLE public.empresa (
 	CONSTRAINT "PK_idempresa" PRIMARY KEY(idempresa)
 ) WITH (OIDS = FALSE);
 CREATE TABLE public.tecnologia (
-	idtecnologia SERIAL PRIMARY KEY,
+	idtecnologia SERIAL NOT NULL,
 	tecnologia character varying(45) NOT NULL,
 	excluido boolean NOT NULL default '0',
+	CONSTRAINT "PK_idtecnologia" PRIMARY KEY(idtecnologia)
 ) WITH (OIDS = FALSE);
 CREATE TABLE public.vaga (
 	idvaga SERIAL NOT NULL,
