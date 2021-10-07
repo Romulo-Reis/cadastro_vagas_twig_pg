@@ -103,7 +103,7 @@ class EmpresaDAO extends BaseDAO
 
             $this->update(
                 "empresa",
-                "razaosocial = :razaosocial, nomefantasia = :nomefantasia, CNPJ = :CNPJ",
+                "razaosocial = :razaosocial, nomefantasia = :nomefantasia, \"CNPJ\" = :CNPJ",
                 [
                     ":razaosocial" => $razaoSocial,
                     ":nomefantasia" => $nomeFantasia,
