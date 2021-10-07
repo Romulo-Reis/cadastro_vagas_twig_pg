@@ -63,11 +63,11 @@ class TecnologiaDAO extends BaseDAO
         try {
             $idTecnologia = $tecnologia->getIdTecnologia();
             $nomeTecnologia = $tecnologia->getTecnologia();
-            $this->update(
+            return $this->update(
                 "tecnologia",
                 "tecnologia = :tecnologia",
                 [
-                ":tecnologia" => $tecnologia
+                ":tecnologia" => $nomeTecnologia
                 ],
                 "idtecnoologia = $idTecnologia"
             );

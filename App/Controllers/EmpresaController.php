@@ -71,9 +71,8 @@ class EmpresaController extends Controller
 
             $this->setViewParam("empresa", $empresa);
             $this->setViewParam("erros", Sessao::retornaErro());
-            $this->render("@empresa/cadastro.html.twig", $this->getViewVar());
-
             Sessao::limpaErro();
+            $this->render("@empresa/cadastro.html.twig", $this->getViewVar());
         }
     }
 
@@ -105,6 +104,7 @@ class EmpresaController extends Controller
                 } else {
                     $this->setViewParam("empresa", $empresa);
                     $this->setViewParam("erros", Sessao::retornaErro());
+                    Sessao::limpaErro();
                     $this->render("@empresa/editar.html.twig", $this->getViewVar());
                 }
             } else {

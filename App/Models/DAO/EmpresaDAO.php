@@ -101,7 +101,7 @@ class EmpresaDAO extends BaseDAO
             $nomeFantasia = $empresa->getNomeFantasia();
             $CNPJ = $empresa->getCNPJ();
 
-            $this->update(
+            return $this->update(
                 "empresa",
                 "razaosocial = :razaosocial, nomefantasia = :nomefantasia, \"CNPJ\" = :CNPJ",
                 [
