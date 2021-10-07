@@ -41,6 +41,7 @@ class Email
         $mail = new PHPMailer();
         $mail->isSMTP();
         //$mail->SMTPDebug = SMTP::DEBUG_LOWLEVEL;
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
         //$mail->Host = 'smtp.gmail.com';
         $mail->Host = gethostbyname('smtp.gmail.com');
         //$mail->Port = 465;
