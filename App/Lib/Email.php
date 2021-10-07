@@ -42,12 +42,12 @@ class Email
         $mail->isSMTP();
         //$mail->SMTPDebug = SMTP::DEBUG_LOWLEVEL;
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-        //$mail->Host = 'smtp.gmail.com';
-        $mail->Host = gethostbyname('smtp.gmail.com');
-        //$mail->Port = 465;
-        $mail->Port = 587;
-        //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Host = 'smtp.gmail.com';
+        //$mail->Host = gethostbyname('smtp.gmail.com');
+        $mail->Port = 465;
+        //$mail->Port = 587;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->SMTPAuth = true;
         $mail->Username = $_ENV['EMAIL_USERNAME'];
         $mail->Password = $_ENV['EMAIL_PASSWORD'];
