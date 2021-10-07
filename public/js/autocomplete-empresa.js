@@ -2,7 +2,7 @@ var idempresa = null;
 
 var optionsEmpresa = {
 	url: function(empresa) {
-		return "http://localhost/cadastro_vagas_twig_pg/empresa/autoComplete/" + empresa;
+		return "/empresa/autoComplete/" + empresa;
 	},
 
 	getValue: function(element) {

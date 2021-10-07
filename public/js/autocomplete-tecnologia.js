@@ -46,7 +46,7 @@ var app = {
 var optionsTecnologias = {
 
 	url: function(tecnologia) {
-		return "http://localhost/cadastro_vagas_twig_pg/tecnologia/autoComplete/" + tecnologia;
+		return "/tecnologia/autoComplete/" + tecnologia;
 	},
 
 	getValue: function(element) {
