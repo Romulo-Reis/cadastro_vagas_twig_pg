@@ -48,13 +48,13 @@ class Email
         $mail->Port = 587;
         //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $user = $_ENV['CLOUDMAILIN_USERNAME'];
+        $user = $_ENV['EMAIL_USERNAME'];
         $password = $_ENV['CLOUDMAILIN_PASSWORD'];
         $mail->SMTPAuth = true;
         $mail->Username = $user;
         $mail->Password = $password;
-        $mail->setFrom($_ENV['CLOUDMAILIN_USERNAME'], 'Não responda');
-        $mail->addReplyTo($_ENV['CLOUDMAILIN_USERNAME'], 'Não responda');
+        $mail->setFrom($_ENV['CLOUDMAILIN_FORWARD_ADDRESS'], 'Não responda');
+        $mail->addReplyTo($_ENV['CLOUDMAILIN_FORWARD_ADDRESS'], 'Não responda');
         $mail->addAddress($para, $nome);
         $mail->Subject = $titulo;
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
