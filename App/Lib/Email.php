@@ -49,7 +49,7 @@ class Email
         //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $user = $_ENV['EMAIL_USERNAME'];
-        $password = $_ENV['CLOUDMAILIN_PASSWORD'];
+        $password = $_ENV['EMAIL_PASSWORD'];
         $mail->SMTPAuth = true;
         $mail->Username = $user;
         $mail->Password = $password;
