@@ -10,10 +10,34 @@ $(function() {
         classExpand: 'dcjq-current-parent'
     });
 
-    $('#lista-usuarios').DataTable();
-    $('#lista-tecnologias').DataTable();
-    $('#lista-empresas').DataTable();
-    $('#lista-vagas').DataTable();
+    $('#lista-usuarios').DataTable(
+        {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+            }
+        }
+    );
+    $('#lista-tecnologias').DataTable(
+        {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+            }
+        }
+    );
+    $('#lista-empresas').DataTable(
+        {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+            }
+        }
+    );
+    $('#lista-vagas').DataTable(
+        {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json'
+            }
+        }
+    );
 });
 
 var Script = function () {
