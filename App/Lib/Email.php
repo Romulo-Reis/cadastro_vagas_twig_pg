@@ -55,7 +55,7 @@ class Email
         $mail->addReplyTo($_ENV['EMAIL_USERNAME'], 'Não responda');
         $mail->addAddress($para, $nome);
         $mail->Subject = $titulo;
-        $mail->CharSet = 'UTF-8';
+        $mail->CharSet = PHPMailer::CHARSET_UTF8;
         $mail->msgHTML($html);
         $mail->AltBody = $txt;
         $mail->addAttachment(PATH . '/public/assets/logo-devmedia.png');
