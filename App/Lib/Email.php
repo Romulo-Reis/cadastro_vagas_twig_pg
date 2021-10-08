@@ -48,11 +48,14 @@ class Email
         //$mail->Port = 587;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $user = $_ENV['EMAIL_USERNAME'];
+        $_ENV['EMAIL_USERNAME'];
+        $password = $_ENV['EMAIL_PASSWORD'];
         $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['EMAIL_USERNAME'];
-        $mail->Password = $_ENV['EMAIL_PASSWORD'];
-        $mail->setFrom($_ENV['EMAIL_USERNAME'], 'Não responda');
-        $mail->addReplyTo($_ENV['EMAIL_USERNAME'], 'Não responda');
+        $mail->Username = $user;
+        $mail->Password = $password;
+        $mail->setFrom($user, 'Não responda');
+        $mail->addReplyTo($user, 'Não responda');
         $mail->addAddress($para, $nome);
         $mail->Subject = $titulo;
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
