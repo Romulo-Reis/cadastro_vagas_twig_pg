@@ -1,8 +1,4 @@
 $(function() {
-    $('#lista-usuarios').DataTable();
-    $('#lista-tecnologias').DataTable();
-    $('#lista-empresas').DataTable();
-    $('#lista-vagas').DataTable();
     $('#nav-accordion').dcAccordion({
         eventType: 'click',
         autoClose: true,
@@ -13,6 +9,11 @@ $(function() {
         autoExpand: true,
         classExpand: 'dcjq-current-parent'
     });
+
+    $('#lista-usuarios').DataTable();
+    $('#lista-tecnologias').DataTable();
+    $('#lista-empresas').DataTable();
+    $('#lista-vagas').DataTable();
 });
 
 var Script = function () {
