@@ -53,8 +53,8 @@ class Email
         $mail->SMTPAuth = true;
         $mail->Username = $user;
         $mail->Password = $password;
-        $mail->setFrom($_ENV['CLOUDMAILIN_FORWARD_ADDRESS'], 'Não responda');
-        $mail->addReplyTo($_ENV['CLOUDMAILIN_FORWARD_ADDRESS'], 'Não responda');
+        $mail->setFrom($_ENV['CLOUDMAILIN_USERNAME'], 'Não responda');
+        $mail->addReplyTo($_ENV['CLOUDMAILIN_USERNAME'], 'Não responda');
         $mail->addAddress($para, $nome);
         $mail->Subject = $titulo;
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
