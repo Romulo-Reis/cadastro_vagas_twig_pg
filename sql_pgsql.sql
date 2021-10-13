@@ -9,7 +9,7 @@ CREATE TABLE public.usuario (
 	login character varying(20) NOT NULL,
 	email character varying(100) NOT NULL UNIQUE,
 	senha character varying(50) NOT NULL UNIQUE,
-	"dataCadastro" timestamp with time zone NOT NULL,
+	"dataCadastro" timestamp NOT NULL,
 	status boolean NOT NULL default '0',
 	excluido boolean NOT NULL default '0',
 	CONSTRAINT "PK_idUsuario" PRIMARY KEY("idUsuario")
