@@ -18,9 +18,9 @@ class TecnologiaDAO extends BaseDAO
     public function listar($id = null)
     {
         if ($id) {
-            $resultado = $this->select("select * from tecnologia where idtecnologia = $id");
+            $resultado = $this->select("select * from tecnologia where excluido = '0' and idtecnologia = $id");
         } else {
-            $resultado = $this->select("select * from tecnologia");
+            $resultado = $this->select("select * from tecnologia where excluido = '0'");
         }
         return $resultado->fetchAll(PDO::FETCH_CLASS, Tecnologia::class);
     }
@@ -28,7 +28,7 @@ class TecnologiaDAO extends BaseDAO
     public function listarPorVaga($id = null)
     {
         if ($id) {
-            $resultado = $this->select("select t.idtecnologia, t.tecnologia from tecnologiasporvaga v inner join tecnologia t on t.idtecnologia = v.\"FK_idtecnologia\" where v.\"FK_idvaga\" = $id");
+            $resultado = $this->select("select t.idtecnologia, t.tecnologia from tecnologiasporvaga v inner join tecnologia t on t.idtecnologia = v.\"FK_idtecnologia\" where v.excluido = '0' and v.\"FK_idvaga\" = $id");
         }
 
         return $resultado->fetchAll(PDO::FETCH_CLASS, Tecnologia::class);
@@ -36,7 +36,7 @@ class TecnologiaDAO extends BaseDAO
 
     public function listarPorTecnologia(Tecnologia $tecnologia)
     {
-        $resultado = $this->select("SELECT * FROM tecnologia where tecnologia LIKE '%" . $tecnologia->getTecnologia() . "%' LIMIT 6 OFFSET 0");
+        $resultado = $this->select("SELECT * FROM tecnologia where excluido = '0' and tecnologia LIKE '%" . $tecnologia->getTecnologia() . "%' LIMIT 6 OFFSET 0");
         return $resultado->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -101,7 +101,7 @@ class TecnologiaDAO extends BaseDAO
 
     public function verificarExistencia(Tecnologia $tecnologia)
     {
-        $resultado = $this->select("select count(*) from tecnologia where tecnologia ='" . $tecnologia->getTecnologia() . "'");
+        $resultado = $this->select("select count(*) from tecnologia where excluido = '0' and tecnologia ='" . $tecnologia->getTecnologia() . "'");
         return $resultado->fetchColumn();
     }
 }

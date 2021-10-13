@@ -17,10 +17,10 @@ class VagaDAO extends BaseDAO
 
     public function listar($id = null)
     {
-        $SQL = "select v.idvaga, v.titulo, v.descricao, v.\"FK_idempresa\", e.idempresa, e.razaosocial, e.nomefantasia, e.\"CNPJ\" from vaga v inner join empresa e on v.\"FK_idempresa\" = e.idempresa";
+        $SQL = "select v.idvaga, v.titulo, v.descricao, v.\"FK_idempresa\", e.idempresa, e.razaosocial, e.nomefantasia, e.\"CNPJ\" from vaga v inner join empresa e on v.\"FK_idempresa\" = e.idempresa where v.excluido = '0'";
 
         if ($id) {
-            $SQL .= " where v.idvaga = $id";
+            $SQL .= " and v.idvaga = $id";
         }
 
         $resultado = $this->select($SQL);

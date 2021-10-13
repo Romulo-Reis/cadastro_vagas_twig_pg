@@ -91,15 +91,14 @@ abstract class BaseDAO
     public function delete($table, $where = null)
     {
         $this->log->info("Executando o método delete.");
-        if (!empty($table)) {
-            if ($where) {
-                $where = "where $where";
-            }
-
-            $stm = $this->connection->prepare("delete from $table $where");
-            $stm->execute();
-
-            return $stm->rowCount();
+        return $this->update(
+            $table,
+            "excluido = :excluido",
+            [
+                ":excluido" => 1
+            ],
+            $where
+        );
         } else {
             return false;
         }

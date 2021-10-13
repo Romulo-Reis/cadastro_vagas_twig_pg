@@ -17,25 +17,26 @@ class UsuarioDAO extends BaseDAO
     {
         try {
             if ($id) {
-                $resultado = $this->select("select * from usuario where \"idUsuario\" = $id");
+                $resultado = $this->select("select * from usuario where excluido = '0' and \"idUsuario\" = $id");
             } else {
-                $resultado = $this->select("select * from usuario");
+                $resultado = $this->select("select * from usuario where excluido = '0'");
             }
             return $resultado->fetchAll(PDO::FETCH_CLASS, Usuario::class);
         } catch (Exception $e) {
+            $this->log->alert("Erro na listagem dos dados.", ['exception' => $e]);
             throw new Exception("Erro na listagem dos dados. " . $e->getMessage(), 500);
         }
     }
 
     public function listarPorLogin(Usuario $usuario)
     {
-        $resultado = $this->select("select * from usuario where login = '" . $usuario->getLogin() . "'");
+        $resultado = $this->select("select * from usuario where excluido = '0' and login = '" . $usuario->getLogin() . "'");
         return $resultado->fetchAll(PDO::FETCH_CLASS, Usuario::class);
     }
 
     public function listarPorEmail(Usuario $usuario)
     {
-        $resultado = $this->select("select * from usuario where email = '" . $usuario->getEmail() . "'");
+        $resultado = $this->select("select * from usuario where excluido = '0' and email = '" . $usuario->getEmail() . "'");
         return $resultado->fetchAll(PDO::FETCH_CLASS, Usuario::class);
     }
 
@@ -136,25 +137,25 @@ class UsuarioDAO extends BaseDAO
 
     public function verificaExistenciaLogin(Usuario $usuario)
     {
-        $resultado = $this->select("SELECT count(*) FROM usuario where login = '" . $usuario->getLogin() . "'");
+        $resultado = $this->select("SELECT count(*) FROM usuario where excluido = '0' and login = '" . $usuario->getLogin() . "'");
         return $resultado->fetchColumn();
     }
 
     public function verificaExistenciaEmail(Usuario $usuario)
     {
-        $resultado = $this->select("SELECT count(*) FROM usuario where email = '" . $usuario->getEmail() . "'");
+        $resultado = $this->select("SELECT count(*) FROM usuario where excluido = '0' and email = '" . $usuario->getEmail() . "'");
         return $resultado->fetchColumn();
     }
 
     public function pegarQuantidadeAtivos()
     {
-        $resultado = $this->select("SELECT count(*) from usuario where status = '1'");
+        $resultado = $this->select("SELECT count(*) from usuario where excluido = '0' and status = '1'");
         return $resultado->fetchColumn();
     }
 
     public function pegarQuantidadeInativos()
     {
-        $resultado = $this->select("SELECT count(*) from usuario where status = '0'");
+        $resultado = $this->select("SELECT count(*) from usuario where excluido = '0' and status = '0'");
         return $resultado->fetchColumn();
     }
 }

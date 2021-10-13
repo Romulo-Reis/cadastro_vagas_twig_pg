@@ -19,9 +19,9 @@ class HashDAO extends BaseDAO
     {
         try {
             if ($id) {
-                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\" where h.\"idHash\" = $id");
+                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0' and h.\"idHash\" = $id");
             } else {
-                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\"");
+                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0'");
             }
             $dataSetHashs = $resultado->fetchAll();
             $listaHashs = [];
@@ -52,7 +52,7 @@ class HashDAO extends BaseDAO
         try {
             $listaHashs = [];
             if ($id) {
-                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on h.\"FK_idUsuario\" = u.\"idUsuario\" where h.\"FK_idUsuario\" = $id");
+                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on h.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0' and h.\"FK_idUsuario\" = $id");
                 $dataSetHashs = $resultado->fetchAll();
 
                 foreach ($dataSetHashs as $dataSetHash) {

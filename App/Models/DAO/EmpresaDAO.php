@@ -20,11 +20,11 @@ class EmpresaDAO extends BaseDAO
         try {
             if ($id) {
                 $resultado = $this->select(
-                    "SELECT * FROM empresa where idempresa = $id"
+                    "SELECT * FROM empresa where excluido = '0' and idempresa = $id"
                 );
             } else {
                 $resultado = $this->select(
-                    "SELECT * FROM empresa"
+                    "SELECT * FROM empresa where excluido = '0'"
                 );
             }
 
@@ -38,7 +38,7 @@ class EmpresaDAO extends BaseDAO
     {
 
         $resultado = $this->select(
-            "SELECT * FROM empresa where nomefantasia like '%" . $empresa->getNomeFantasia() . "%' LIMIT 6 OFFSET 0"
+            "SELECT * FROM empresa where excluido = '0' and nomefantasia like '%" . $empresa->getNomeFantasia() . "%' LIMIT 6 OFFSET 0"
         );
         return $resultado->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -48,26 +48,26 @@ class EmpresaDAO extends BaseDAO
 
         $id = $empresa->getIdEmpresa();
         $resultado = $this->select(
-            "SELECT * FROM vaga where \"FK_idempresa\" = $id"
+            "SELECT * FROM vaga where excluido ='0' and \"FK_idempresa\" = $id"
         );
         return $resultado->fetchAll(PDO::FETCH_CLASS, Vaga::class);
     }
 
     public function verificaExistenciaCNPJ(Empresa $empresa)
     {
-        $resultado = $this->select("SELECT count(*) FROM empresa where \"CNPJ\" = '" . $empresa->getCNPJ() . "'");
+        $resultado = $this->select("SELECT count(*) FROM empresa where excluido = '0' and \"CNPJ\" = '" . $empresa->getCNPJ() . "'");
         return $resultado->fetchColumn();
     }
 
     public function verificaExistenciaRazaoSocial(Empresa $empresa)
     {
-        $resultado = $this->select("SELECT count(*) FROM empresa where razaosocial = '" . $empresa->getRazaoSocial() . "'");
+        $resultado = $this->select("SELECT count(*) FROM empresa where excluido = '0' and razaosocial = '" . $empresa->getRazaoSocial() . "'");
         return $resultado->fetchColumn();
     }
 
     public function verificaExistenciaNomeFantasia(Empresa $empresa)
     {
-        $resultado = $this->select("SELECT count(*) FROM empresa where nomefantasia = '" . $empresa->getNomeFantasia() . "'");
+        $resultado = $this->select("SELECT count(*) FROM empresa where excluido = '0' and nomefantasia = '" . $empresa->getNomeFantasia() . "'");
         return $resultado->fetchColumn();
     }
 
