@@ -99,9 +99,6 @@ abstract class BaseDAO
             ],
             $where
         );
-        } else {
-            return false;
-        }
     }
 
     public function sqlDateTimeFromMicroTimestamp(int $microtimestamp): string
