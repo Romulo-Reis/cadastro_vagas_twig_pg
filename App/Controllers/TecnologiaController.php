@@ -191,7 +191,7 @@ class TecnologiaController extends Controller
             Sessao::gravaErro($resultadoValidacao->getErros());
             $this->redirect("/login");
         } else {
-            if (empty($_POST["idTecnologia"])) {
+            if (empty($_POST["idtecnologia"])) {
                 throw new Exception("Página não encontrada!", 404);
             } else {
                 $tecnologia = new Tecnologia();
