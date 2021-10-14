@@ -195,7 +195,7 @@ class TecnologiaController extends Controller
                 throw new Exception("Página não encontrada!", 404);
             } else {
                 $tecnologia = new Tecnologia();
-                $tecnologia->setIdTecnologia(trim($_POST["idTecnologia"]));
+                $tecnologia->setIdTecnologia(trim($_POST["idtecnologia"]));
                 $tecnologiaService = new TecnologiaService();
 
                 if ($tecnologiaService->excluir($tecnologia)) {
