@@ -2,8 +2,6 @@
 
 namespace App\Lib;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 class Email
@@ -12,12 +10,36 @@ class Email
     {
         $log = new Log(get_called_class());
         $log->info("Enviando e-mail de confirmação e cadastro");
+        $recipients = array();
+        $recipients[] = array(
+            'name' => $usuario->getLogin(),
+            'email' => $usuario->getEmail()
+        );
+        $list = array();
+        $contacts = array();
+        $methods = array(
+            'postmark' => false,
+            'secureSend' => false,
+            'encryptContent' => false,
+            'secureReply' => false
+        );
+        $mensagem = array(
+            'template' => array(
+                'name' => 'confirmacao_conta_cadastro_vagas',
+                'fields' => array(
+                    'usuario' => $usuario->getLogin(),
+                    'link' => "<a href='http://" . APP_HOST . "/usuario/ativacao/{$hash->getHash()}'>Clique aqui</a>"
+                )
+            ),
+            'recipients' => $recipients,
+            'list' => $list,
+            'contact' => $contacts,
+            'methods' => $methods
+        );
         self::enviar(
             $usuario->getEmail(),
             $usuario->getLogin(),
-            'Confirmação de email',
-            "<p><a>Clique <a href='http://" . APP_HOST . "/usuario/ativacao/{$hash->getHash()}'>aqui</a>.</p>",
-            "usuario/cadastrar/{$hash->getHash()} para ativar o seu cadastro."
+            json_encode($mensagem)
         );
     }
 
@@ -25,49 +47,76 @@ class Email
     {
         $log = new Log(get_called_class());
         $log->info("Enviando e-mail com o código de recuperação de senha");
+        $recipients = array();
+        $recipients[] = array(
+            'name' => $usuario->getLogin(),
+            'email' => $usuario->getEmail()
+        );
+        $list = array();
+        $contacts = array();
+        $methods = array(
+            'postmark' => false,
+            'secureSend' => false,
+            'encryptContent' => false,
+            'secureReply' => false
+        );
+        $mensagem = array(
+            'template' => array(
+                'name' => 'codigo_de_recuperacao_senha_cadastro_vagas',
+                'fields' => array(
+                    'usuario' => $usuario->getLogin(),
+                    'codigo' => $codigo
+                )
+            ),
+            'recipients' => $recipients,
+            'list' => $list,
+            'contact' => $contacts,
+            'methods' => $methods
+        );
         self::enviar(
             $usuario->getEmail(),
             $usuario->getLogin(),
-            'Código de alteração de senha',
-            "<p>Olá, {$usuario->getLogin()}</p><p>Favor, informe o código $codigo para prosseguir com a alteração da senha.</p>",
-            "Favor, informe o código $codigo para prosseguir coma alteração da senha."
+            json_encode($mensagem)
         );
     }
 
-    private static function enviar($para, $nome, $titulo, $html, $txt)
+    private static function enviar($para, $nome, $mensagem)
     {
         $log = new Log(get_called_class());
         $log->info("Executando o método enviar");
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        //$mail->SMTPDebug = SMTP::DEBUG_LOWLEVEL;
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-        $mail->Host = $_ENV['EMAIL_HOST'];
-        //$mail->Host = gethostbyname('smtp.gmail.com');
-        //$mail->Port = 465;
-        $mail->Port = 587;
-        //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $user = $_ENV['EMAIL_USERNAME'];
-        $password = $_ENV['EMAIL_PASSWORD'];
-        $mail->SMTPAuth = true;
-        $mail->Username = $user;
-        $mail->Password = $password;
-        $mail->setFrom($_ENV['CLOUDMAILIN_FORWARD_ADDRESS'], 'Não responda');
-        $mail->addReplyTo($_ENV['CLOUDMAILIN_FORWARD_ADDRESS'], 'Não responda');
-        $mail->addAddress($para, $nome);
-        $mail->Subject = $titulo;
-        $mail->CharSet = PHPMailer::CHARSET_UTF8;
-        $mail->msgHTML($html);
-        $mail->AltBody = $txt;
-        $mail->addAttachment(PATH . '/public/assets/logo-devmedia.png');
 
-        if (!$mail->send()) {
-            $log->critical("Erro no envio do e-mail.", [
-                "Destinatario" => $para,
-                "Erro" => $mail->ErrorInfo
-            ]);
-            throw new Exception("Erro no envio do e-mail: {$mail->ErrorInfo}");
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $_ENV['TRUSTIFI_URL'] . "/api/i/v1/email",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $mensagem,
+            CURLOPT_HTTPHEADER => array(
+                "x-trustifi-key: " . $_ENV['TRUSTIFI_KEY'],
+                "x-trustifi-secret: " . $_ENV['TRUSTIFI_SECRET'],
+                "content-type: application/json"
+            )
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+            throw new Exception($err, 500);
+        } else {
+            $info = curl_getinfo($curl);
+            $status = $info["http_code"];
+            if ($status != 200) {
+                throw new Exception("Falha no envio do e-mail!", $status);
+            } else {
+                $response = json_decode($response);
+                $log->info($response->meta[0]->message);
+            }
         }
     }
 }
