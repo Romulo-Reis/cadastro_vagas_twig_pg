@@ -10,74 +10,84 @@ class Email
     {
         $log = new Log(get_called_class());
         $log->info("Enviando e-mail de confirmação e cadastro");
-        $recipients = array();
-        $recipients[] = array(
-            'name' => $usuario->getLogin(),
-            'email' => $usuario->getEmail()
-        );
-        $list = array();
-        $contacts = array();
-        $methods = array(
-            'postmark' => false,
-            'secureSend' => false,
-            'encryptContent' => false,
-            'secureReply' => false
-        );
-        $mensagem = array(
-            'template' => array(
-                'name' => 'confirmacao_conta_cadastro_vagas',
-                'fields' => array(
-                    'usuario' => $usuario->getLogin(),
-                    'link' => "<a href='http://" . APP_HOST . "/usuario/ativacao/{$hash->getHash()}'>Clique aqui</a>"
-                )
-            ),
-            'recipients' => $recipients,
-            'list' => $list,
-            'contact' => $contacts,
-            'methods' => $methods
-        );
-        self::enviar(
-            $usuario->getEmail(),
-            $usuario->getLogin(),
-            json_encode($mensagem)
-        );
+        try {
+            $recipients = array();
+            $recipients[] = array(
+                'name' => $usuario->getLogin(),
+                'email' => $usuario->getEmail()
+            );
+            $list = array();
+            $contacts = array();
+            $methods = array(
+                'postmark' => false,
+                'secureSend' => false,
+                'encryptContent' => false,
+                'secureReply' => false
+            );
+            $mensagem = array(
+                'template' => array(
+                    'name' => 'confirmacao_conta_cadastro_vagas',
+                    'fields' => array(
+                        'usuario' => $usuario->getLogin(),
+                        'link' => "<a href='http://" . APP_HOST . "/usuario/ativacao/{$hash->getHash()}'>Clique aqui</a>"
+                    )
+                ),
+                'recipients' => $recipients,
+                'list' => $list,
+                'contact' => $contacts,
+                'methods' => $methods
+            );
+            self::enviar(
+                $usuario->getEmail(),
+                $usuario->getLogin(),
+                json_encode($mensagem)
+            );
+        } catch (Exception $e) {
+            $log->alert($e->getMessage(), ['exception' => $e]);
+            throw new Exception($e);
+        }
     }
 
     public static function enviarEmailComCodigoRecuperacao($usuario, $codigo)
     {
         $log = new Log(get_called_class());
         $log->info("Enviando e-mail com o código de recuperação de senha");
-        $recipients = array();
-        $recipients[] = array(
-            'name' => $usuario->getLogin(),
-            'email' => $usuario->getEmail()
-        );
-        $list = array();
-        $contacts = array();
-        $methods = array(
-            'postmark' => false,
-            'secureSend' => false,
-            'encryptContent' => false,
-            'secureReply' => false
-        );
-        $mensagem = array(
-            'template' => array(
-                'name' => 'codigo_de_recuperacao_senha_cadastro_vagas',
-                'fields' => array(
-                    'usuario' => $usuario->getLogin(),
-                    'codigo' => $codigo
-                )
-            ),
-            'recipients' => $recipients,
-            'list' => $list,
-            'contact' => $contacts,
-            'methods' => $methods
-        );
-        self::enviar(
-            $usuario->getEmail(),
-            $usuario->getLogin(),
-            json_encode($mensagem)
-        );
+        try {
+            $recipients = array();
+            $recipients[] = array(
+                'name' => $usuario->getLogin(),
+                'email' => $usuario->getEmail()
+            );
+            $list = array();
+            $contacts = array();
+            $methods = array(
+                'postmark' => false,
+                'secureSend' => false,
+                'encryptContent' => false,
+                'secureReply' => false
+            );
+            $mensagem = array(
+                'template' => array(
+                    'name' => 'codigo_de_recuperacao_senha_cadastro_vagas',
+                    'fields' => array(
+                        'usuario' => $usuario->getLogin(),
+                        'codigo' => $codigo
+                    )
+                ),
+                'recipients' => $recipients,
+                'list' => $list,
+                'contact' => $contacts,
+                'methods' => $methods
+            );
+            self::enviar(
+                $usuario->getEmail(),
+                $usuario->getLogin(),
+                json_encode($mensagem)
+            );
+        } catch (Exception $e) {
+            $log->alert($e->getMessage(), ['exception' => $e]);
+            throw new Exception($e);
+        }
     }
 
     private static function enviar($para, $nome, $mensagem)
