@@ -104,4 +104,10 @@ class TecnologiaDAO extends BaseDAO
         $resultado = $this->select("select count(*) from tecnologia where excluido = '0' and tecnologia ='" . $tecnologia->getTecnologia() . "'");
         return $resultado->fetchColumn();
     }
+
+    public function verificarExistenciaVagas(Tecnologia $tecnologia)
+    {
+        $resultado = $this->select("select count(*) from tecnologiasporvaga where excluido = '0' and FK_idtecnologia ='" . $tecnologia->getIdTecnologia() . "'");
+        return $resultado->fetchColumn();
+    }
 }
