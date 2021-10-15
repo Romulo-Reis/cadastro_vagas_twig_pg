@@ -107,7 +107,7 @@ class TecnologiaDAO extends BaseDAO
 
     public function verificarExistenciaVagas(Tecnologia $tecnologia)
     {
-        $resultado = $this->select("select count(*) from tecnologiasporvaga where excluido = '0' and FK_idtecnologia ='" . $tecnologia->getIdTecnologia() . "'");
+        $resultado = $this->select("select count(*) from tecnologiasporvaga where excluido = '0' and \"FK_idtecnologia\" ='" . $tecnologia->getIdTecnologia() . "'");
         return $resultado->fetchColumn();
     }
 }
