@@ -7,10 +7,10 @@ use App\Models\Entidades\Vaga;
 use App\Models\DAO\TecnologiaDAO;
 use App\Models\Validacao\TecnologiaValidadorInserir;
 use App\Models\Validacao\TecnologiaValidadorEditar;
-use App\Models\Validacao\ResultadoValidacao;
 use App\Lib\Sessao;
 use App\Lib\Exportar;
 use App\Lib\Log;
+use Exception;
 
 class TecnologiaService
 {
@@ -98,5 +98,20 @@ class TecnologiaService
 
     public function excluir(Tecnologia $tecnologia)
     {
+        $this->log->info("Executando o método excluir");
+        $tecnologiaDao = new TecnologiaDAO();
+        try {
+            if ($tecnologiaDao->verificarExistenciaVagas($tecnologia) == 0) {
+                $tecnologiaDao->excluir($tecnologia);
+                Sessao::limpaFormulario();
+                Sessao::limpaMensagem();
+                Sessao::gravaMensagem("Tecnologia excluída com sucesso.");
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e);
+        }
     }
 }
