@@ -120,8 +120,8 @@ class Email
         } else {
             $info = curl_getinfo($curl);
             $status = $info["http_code"];
-            if ($status != "200") {
-                throw new Exception("Falha no envio do e-mail!", $status);
+            if ($status != "200" && $status != "201") {
+                throw new Exception("Falha no envio do e-mail!", intval($status));
             } else {
                 $response = json_decode($response);
                 $log->info($response->meta[0]->message);
