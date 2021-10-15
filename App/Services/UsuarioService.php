@@ -145,7 +145,7 @@ class UsuarioService
     {
         $this->log->info("Executando o método gerarHash");
         $hash = new Hash();
-        $hash->setStatus(0);
+        $hash->setStatus(false);
         $hash->setHash(Criptografia::criptografar($usuario->getEmail()));
         $dataAtual = DataUtil::getDataAtual();
         $hash->setDataCadastro(DataUtil::getDataFormatoATOM($dataAtual));
@@ -163,7 +163,7 @@ class UsuarioService
         try {
             $transacao->beginTransaction();
             $hash = $hashDAO->listarPorIdUsuario($usuario->getIdUsuario())[0];
-            if (!empty($hash) && $hash->getStatus() == 1) {
+            if (!empty($hash) && $hash->getStatus() == true) {
                 Sessao::limpaFormulario();
                 throw new Exception("A chave já foi ativada.");
             }
@@ -180,8 +180,8 @@ class UsuarioService
                 $transacao->rollback();
                 return false;
             } else {
-                $usuario->setStatus(1);
-                $hash->setStatus(1);
+                $usuario->setStatus(true);
+                $hash->setStatus(true);
                 $usuarioDAO->ativar($usuario);
                 $hashDAO->ativar($hash);
                 $transacao->commit();
