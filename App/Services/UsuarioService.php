@@ -180,8 +180,8 @@ class UsuarioService
                 $transacao->rollback();
                 return false;
             } else {
-                $usuario->setStatus(true);
-                $hash->setStatus(true);
+                $usuario->setStatus(1);
+                $hash->setStatus(1);
                 $usuarioDAO->ativar($usuario);
                 $hashDAO->ativar($hash);
                 $transacao->commit();
