@@ -56,7 +56,7 @@ class UsuarioDAO extends BaseDAO
                     ":login" => $login,
                     ":senha" => $senha,
                     ":email" => $email,
-                    ":status" => intval($status),
+                    ":status" => $status,
                     ":dataCadastro" => $dataCadastro
                 ]
             );
@@ -82,7 +82,7 @@ class UsuarioDAO extends BaseDAO
                     ":login" => $login,
                     ":senha" => $senha,
                     ":email" => $email,
-                    ":status" => intval($status)
+                    ":status" => $status
                 ],
                 "\"idUsuario\" = $idUsuario"
             );
