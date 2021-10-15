@@ -70,7 +70,7 @@ class LoginController extends Controller
             $usuario->setSenha($_POST['senha']);
             $usuario->setConfSenha($_POST['confSenha']);
             $usuario->setEmail($_POST['email']);
-            $usuario->setStatus(0);
+            $usuario->setStatus(false);
             $dataAtual = DataUtil::getDataAtual();
             $usuario->setDataCadastro(DataUtil::getDataFormatoATOM($dataAtual));
             Sessao::gravaFormulario($_POST);
