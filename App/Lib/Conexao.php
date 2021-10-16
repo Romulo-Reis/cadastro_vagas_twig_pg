@@ -19,15 +19,16 @@ class Conexao
     public static function getConnection(): PDO
     {
         $log = new Log(get_called_class());
+        $dbopts = parse_url($_ENV['DATABASE_URL']);
         try {
             $drive = $_ENV['DB_DRIVER'];
-            $host =  $_ENV['DB_HOST'];
-            $port = $_ENV['DB_PORT'];
-            $db_name = $_ENV['DB_NAME'];
+            $host =  $dbopts["host"];
+            $port = $dbopts["port"];
+            $db_name = ltrim($dbopts["path"], '/');
             $pdoConfig = "$drive:host = $host;port=$port;";
             $pdoConfig .= "dbname=$db_name;";
-            $usuario = $_ENV['DB_USER'];
-            $senha = $_ENV['DB_PASSWORD'];
+            $usuario = $dbopts["user"];
+            $senha = $dbopts["pass"];
             if (self::$connection === null) {
                 self::$connection = new PDO($pdoConfig, $usuario, $senha);
                 self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
