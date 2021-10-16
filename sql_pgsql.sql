@@ -8,7 +8,7 @@ CREATE TABLE public.usuario (
 	"idUsuario" serial NOT NULL,
 	login character varying(20) NOT NULL,
 	email character varying(100) NOT NULL UNIQUE,
-	senha character varying(50) NOT NULL UNIQUE,
+	senha character varying(50) NOT NULL,
 	"dataCadastro" timestamp NOT NULL,
 	status boolean NOT NULL default '0',
 	excluido boolean NOT NULL default '0',
