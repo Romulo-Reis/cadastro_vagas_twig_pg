@@ -1,0 +1,34 @@
+{% extends '@layouts/base.html.twig' %}
+{% block conteudo %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <form class="form-horizontal" action="http://{{ APP_HOST }}/perfil/excluir" method="post">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Excluir Perfil
+                        </header>
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <section class="panel">
+                                    <div class="alert alert-info">
+                                        <b>Tem certeza que deseja excluir o perfil {{ perfil.nome }}?</b> 
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel-body" align="right">
+                        <input type="hidden" name="idPerfil" value="{{ perfil.idPerfil }}">
+                        <button class="btn btn-danger" type="submit">Confirmar exclusão</button>
+                        <a href="http://{{ APP_HOST }}/perfil/listar" class="btn btn-success">Voltar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+{% endblock %}
