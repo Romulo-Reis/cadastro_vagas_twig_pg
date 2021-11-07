@@ -24,7 +24,7 @@ class PerfilController extends Controller
             $perfis = $perfilService->listar($id);
             $this->setViewParam("perfis", $perfis);
             $this->setViewParam("mensagem", Sessao::retornaMensagem());
-            $this->render("@perfil/perfil.html.twig", $this->getViewVar());
+            $this->render("@perfil/listar.html.twig", $this->getViewVar());
             Sessao::limpaMensagem();
         }
     }
