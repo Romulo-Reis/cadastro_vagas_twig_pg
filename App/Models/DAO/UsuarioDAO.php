@@ -60,16 +60,18 @@ class UsuarioDAO extends BaseDAO
         try {
             $login = $usuario->getLogin();
             $senha = $usuario->getSenha();
+            $idPerfil = $usuario->getPerfil()->getIdPerfil();
             $email = $usuario->getEmail();
             $status = $usuario->getStatus();
             $dataCadastro = $usuario->getDataCadastro()->format("Y-m-d H:i:s");
 
             return $this->insert(
                 "usuario",
-                ":login, :senha, :email, :status, :dataCadastro",
+                ":login, :senha, :FK_idPerfil, :email, :status, :dataCadastro",
                 [
                     ":login" => $login,
                     ":senha" => $senha,
+                    ":FK_idPerfil" => $idPerfil,
                     ":email" => $email,
                     ":status" => $status,
                     ":dataCadastro" => $dataCadastro
@@ -86,16 +88,18 @@ class UsuarioDAO extends BaseDAO
         try {
             $idUsuario = $usuario->getIdUsuario();
             $login = $usuario->getLogin();
+            $idPerfil = $usuario->getPerfil()->getIdPerfil();
             $senha = $usuario->getSenha();
             $email = $usuario->getEmail();
             $status = $usuario->getStatus();
 
             return $this->update(
                 "usuario",
-                "login = :login, senha = :senha, email = :email, status = :status",
+                "login = :login, senha = :senha, \"FK_idPerfil\" = :FK_idPerfil, email = :email, status = :status",
                 [
                     ":login" => $login,
                     ":senha" => $senha,
+                    ":FK_idPerfil" => $idPerfil,
                     ":email" => $email,
                     ":status" => $status
                 ],
