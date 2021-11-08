@@ -2,6 +2,7 @@
 
 namespace App\Models\DAO;
 
+use App\Models\Entidades\Perfil;
 use Exception;
 use PDO;
 use App\Models\Entidades\Usuario;
@@ -16,12 +17,26 @@ class UsuarioDAO extends BaseDAO
     public function listar($id = null)
     {
         try {
+            $SQL = "select u.\"idUsuario\", u.login, u.senha, u.status, u.email, u.\"dataCadastro\", p.\"idPerfil\", p.nome from usuario u inner join perfil p on u.\"FK_idPerfil\" = p.\"idPerfil\" where u.excluido = '0'";
             if ($id) {
-                $resultado = $this->select("select * from usuario where excluido = '0' and \"idUsuario\" = $id");
-            } else {
-                $resultado = $this->select("select * from usuario where excluido = '0'");
+                $SQL .= " and u.\"idUsuario\"' = $id";
             }
-            return $resultado->fetchAll(PDO::FETCH_CLASS, Usuario::class);
+            $resultado = $this->select($SQL);
+            $dataSetUsuarios = $resultado->fetchAll();
+            $listaUsuarios = [];
+            foreach ($dataSetUsuarios as $dataSetUsuario) {
+                $usuario = new Usuario();
+                $usuario->setIdUsuario($dataSetUsuario['idUsuario']);
+                $usuario->setLogin($dataSetUsuario['login']);
+                $usuario->setSenha($dataSetUsuario['senha']);
+                $usuario->setPerfil(new Perfil());
+                $usuario->getPerfil()->setIdPerfil($dataSetUsuario['idPerfil']);
+                $usuario->getPerfil()->setNome($dataSetUsuario['nome']);
+                $usuario->setStatus($dataSetUsuario['status']);
+                $usuario->setEmail($dataSetUsuario['email']);
+                $usuario->setDataCadastro($dataSetUsuario['dataCadastro']);
+            }
+            return $listaUsuarios;
         } catch (Exception $e) {
             $this->log->alert("Erro na listagem dos dados.", ['exception' => $e]);
             throw new Exception("Erro na listagem dos dados. " . $e->getMessage(), 500);
