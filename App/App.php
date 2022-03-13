@@ -24,7 +24,8 @@ class App
     public function __construct()
     {
         date_default_timezone_set('America/Sao_Paulo');
-        define('APP_HOST', $_SERVER['HTTP_HOST'] . "");
+        $diretorio_app = $_ENV['DIRETORIO_APP'] ? $_ENV['DIRETORIO_APP'] : "";
+        define('APP_HOST', $_SERVER['HTTP_HOST'] . $diretorio_app);
         define('PATH', realpath('./'));
         define('TITLE', "Cadastro de vagas - mestre detalhe");
         $this->optionsTwig = array('cache' => false);

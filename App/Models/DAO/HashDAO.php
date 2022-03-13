@@ -19,9 +19,9 @@ class HashDAO extends BaseDAO
     {
         try {
             if ($id) {
-                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0' and h.\"idHash\" = $id");
+                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\" as \"dataCadastroHash\", h.excluido as \"excluidoHash\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" as \"dataCadatroUsuario\", u.excluido as \"excluidoUsuario\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0' and h.\"idHash\" = $id");
             } else {
-                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0'");
+                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\" as \"dataCadastroHash\", h.excluido as \"excluidoHash\", u.\"idUsuario\", u.nome, u.login, u.status, u.senha, u.email, u.\"dataCadastro\" as \"dataCadatroUsuario\", u.excluido as \"excluidoUsuario\" from hash h inner join usuario u on u.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0'");
             }
             $dataSetHashs = $resultado->fetchAll();
             $listaHashs = [];
@@ -30,14 +30,16 @@ class HashDAO extends BaseDAO
                 $hash->setIdHash($dataSetHash['idHash']);
                 $hash->setHash($dataSetHash['hash']);
                 $hash->setStatus($dataSetHash['status']);
-                $hash->setDataCadastro($dataSetHash['dataCadastro']);
+                $hash->setDataCadastro($dataSetHash['dataCadastroHash']);
+                $hash->setExcluido($dataSetHash['excluidoHash']);
                 $hash->setUsuario(new Usuario());
                 $hash->getUsuario()->setIdUsuario($dataSetHash['idUsuario']);
                 $hash->getUsuario()->setNome($dataSetHash['nome']);
                 $hash->getUsuario()->setLogin($dataSetHash['login']);
                 $hash->getUsuario()->setSenha($dataSetHash['senha']);
-                $hash->getUsuario()->setDataCadastro($dataSetHash['dataCadastro']);
+                $hash->getUsuario()->setDataCadastro($dataSetHash['dataCadatroUsuario']);
                 $hash->getUsuario()->setStatus($dataSetHash['status']);
+                $hash->getUsuario()->setExcluido($dataSetHash['excluidoUsuario']);
                 $listaHashs[] = $hash;
             }
             return $listaHashs;
@@ -52,7 +54,7 @@ class HashDAO extends BaseDAO
         try {
             $listaHashs = [];
             if ($id) {
-                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\", u.\"idUsuario\", u.login, u.status, u.senha, u.email, u.\"dataCadastro\" from hash h inner join usuario u on h.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0' and h.\"FK_idUsuario\" = $id");
+                $resultado = $this->select("select h.\"idHash\", h.hash, h.status, h.\"dataCadastro\" as \"dataCadastroHash\", h.excluido as \"excluidoHash\", u.\"idUsuario\", u.login, u.status, u.senha, u.email, u.\"dataCadastro\" as \"dataCadatroUsuario\", u.excluido as \"excluidoUsuario\" from hash h inner join usuario u on h.\"FK_idUsuario\" = u.\"idUsuario\" where h.excluido = '0' and h.\"FK_idUsuario\" = $id");
                 $dataSetHashs = $resultado->fetchAll();
 
                 foreach ($dataSetHashs as $dataSetHash) {
@@ -60,14 +62,16 @@ class HashDAO extends BaseDAO
                     $hash->setIdHash($dataSetHash['idHash']);
                     $hash->setHash($dataSetHash['hash']);
                     $hash->setStatus($dataSetHash['status']);
-                    $hash->setDataCadastro($dataSetHash['dataCadastro']);
+                    $hash->setDataCadastro($dataSetHash['dataCadastroHash']);
                     $hash->setUsuario(new Usuario());
+                    $hash->setExcluido($dataSetHash['excluidoHash']);
                     $hash->getUsuario()->setIdUsuario($dataSetHash['idUsuario']);
                     $hash->getUsuario()->setLogin($dataSetHash['login']);
                     $hash->getUsuario()->setSenha($dataSetHash['senha']);
                     $hash->getUsuario()->setEmail($dataSetHash['email']);
-                    $hash->getUsuario()->setDataCadastro($dataSetHash['dataCadastro']);
+                    $hash->getUsuario()->setDataCadastro($dataSetHash['dataCadatroUsuario']);
                     $hash->getUsuario()->setStatus($dataSetHash['status']);
+                    $hash->getUsuario()->setExcluido($dataSetHash['excluidoUsuario']);
                     $listaHashs[] = $hash;
                 }
             }

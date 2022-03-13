@@ -7,6 +7,7 @@ class Tecnologia
 
     private $idtecnologia;
     private $tecnologia;
+    private $excluido;
 
     public function setIdTecnologia($idtecnologia)
     {
@@ -26,5 +27,25 @@ class Tecnologia
     public function getTecnologia()
     {
         return $this->tecnologia;
+    }
+
+    /**
+     * Get the value of excluido
+     */
+    public function getExcluido()
+    {
+        return $this->excluido;
+    }
+
+    /**
+     * Set the value of excluido
+     *
+     * @return  self
+     */
+    public function setExcluido($excluido)
+    {
+        $this->excluido = $excluido;
+
+        return $this;
     }
 }

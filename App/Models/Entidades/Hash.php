@@ -13,6 +13,7 @@ class Hash
     private $status;
     private $dataCadastro;
     private $usuario;
+    private $excluido;
 
     /**
      * Get the value of idHash
@@ -110,6 +111,26 @@ class Hash
     public function setUsuario(Usuario $usuario)
     {
         $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of excluido
+     */
+    public function getExcluido()
+    {
+        return $this->excluido;
+    }
+
+    /**
+     * Set the value of excluido
+     *
+     * @return  self
+     */
+    public function setExcluido($excluido)
+    {
+        $this->excluido = $excluido;
 
         return $this;
     }

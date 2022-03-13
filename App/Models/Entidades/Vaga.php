@@ -12,6 +12,7 @@ class Vaga
     private $tecnologias = [];
     private $descricao;
     private $empresa;
+    private $excluido;
 
     public function setIdVaga($idvaga)
     {
@@ -61,5 +62,25 @@ class Vaga
     public function getEmpresa(): Empresa
     {
         return $this->empresa;
+    }
+
+    /**
+     * Get the value of excluido
+     */
+    public function getExcluido()
+    {
+        return $this->excluido;
+    }
+
+    /**
+     * Set the value of excluido
+     *
+     * @return  self
+     */
+    public function setExcluido($excluido)
+    {
+        $this->excluido = $excluido;
+
+        return $this;
     }
 }

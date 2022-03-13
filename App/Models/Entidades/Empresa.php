@@ -9,6 +9,7 @@ class Empresa
     private $razaosocial;
     private $nomefantasia;
     private $CNPJ;
+    private $excluido;
 
     public function setIdEmpresa($idempresa)
     {
@@ -48,5 +49,25 @@ class Empresa
     public function getCNPJ()
     {
         return $this->CNPJ;
+    }
+
+    /**
+     * Get the value of excluido
+     */
+    public function getExcluido()
+    {
+        return $this->excluido;
+    }
+
+    /**
+     * Set the value of excluido
+     *
+     * @return  self
+     */
+    public function setExcluido($excluido)
+    {
+        $this->excluido = $excluido;
+
+        return $this;
     }
 }

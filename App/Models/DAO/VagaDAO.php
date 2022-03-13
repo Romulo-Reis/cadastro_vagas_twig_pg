@@ -17,7 +17,7 @@ class VagaDAO extends BaseDAO
 
     public function listar($id = null)
     {
-        $SQL = "select v.idvaga, v.titulo, v.descricao, v.\"FK_idempresa\", e.idempresa, e.razaosocial, e.nomefantasia, e.\"CNPJ\" from vaga v inner join empresa e on v.\"FK_idempresa\" = e.idempresa where v.excluido = '0'";
+        $SQL = "select v.idvaga, v.titulo, v.descricao, v.\"FK_idempresa\", v.excluido as \"excluidoVaga\", e.idempresa, e.razaosocial, e.nomefantasia, e.\"CNPJ\", e.excluido as \"excluidoEmpresa\" from vaga v inner join empresa e on v.\"FK_idempresa\" = e.idempresa where v.excluido = '0'";
 
         if ($id) {
             $SQL .= " and v.idvaga = $id";
@@ -31,11 +31,13 @@ class VagaDAO extends BaseDAO
             $vaga->setIdVaga($dataSetVaga['idvaga']);
             $vaga->setTitulo($dataSetVaga['titulo']);
             $vaga->setDescricao($dataSetVaga['descricao']);
+            $vaga->setExcluido($dataSetVaga['excluidoVaga']);
             $vaga->setEmpresa(new Empresa());
             $vaga->getEmpresa()->setIdEmpresa($dataSetVaga['FK_idempresa']);
             $vaga->getEmpresa()->setNomeFantasia($dataSetVaga['nomefantasia']);
             $vaga->getEmpresa()->setRazaoSocial($dataSetVaga['razaosocial']);
-            $vaga->getEmpresa()->setCNPJ($dataSetVaga['cnpj']);
+            $vaga->getEmpresa()->setCNPJ($dataSetVaga['CNPJ']);
+            $vaga->getEmpresa()->setExcluido($dataSetVaga['excluidoEmpresa']);
             $listaVagas[] = $vaga;
         }
         return $listaVagas;

@@ -148,7 +148,7 @@ class TecnologiaController extends Controller
                 if ($tecnologiaService->editar($novaTecnologia)) {
                     $this->redirect("/tecnologia/listar");
                 } else {
-                    $this->redirect("/tecnologia/editar/" . $novaTecnologia->getIdTecnologia());
+                    $this->redirect("/tecnologia/edicao/" . $novaTecnologia->getIdTecnologia());
                 }
             }
         }

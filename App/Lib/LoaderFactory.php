@@ -27,6 +27,7 @@ class LoaderFactory
                 self::$loader->addPath($caminhoTemplates . DIRECTORY_SEPARATOR . 'tecnologia', 'tecnologia');
                 self::$loader->addPath($caminhoTemplates . DIRECTORY_SEPARATOR . 'usuario', 'usuario');
                 self::$loader->addPath($caminhoTemplates . DIRECTORY_SEPARATOR . 'login', 'login');
+                self::$loader->addPath($caminhoTemplates . DIRECTORY_SEPARATOR . 'perfil', 'perfil');
                 self::$loader->addPath($caminhoTemplates . DIRECTORY_SEPARATOR . 'error', 'error');
                 self::$loader->addPath($caminhoTemplates . DIRECTORY_SEPARATOR . 'layouts', 'layouts');
             }
